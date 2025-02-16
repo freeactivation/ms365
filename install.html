@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оffісе 365 Іnstаllаtіоn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", -apple-system, system-ui, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.5;
+            color: #323130;
+        }
+
+        .install-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            animation: containerFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        .progress-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 2rem auto;
+            opacity: 0;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        .progress-ring-circle {
+            stroke: #0078d4;
+            stroke-width: 4;
+            fill: transparent;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .progress-background {
+            stroke: #f3f2f1;
+            stroke-width: 4;
+            fill: transparent;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 40px;
+            height: 40px;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .checkmark.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .checkmark-circle {
+            stroke: #107c10;
+            stroke-width: 4;
+            fill: transparent;
+        }
+
+        .checkmark-check {
+            stroke: #107c10;
+            stroke-width: 4;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+        }
+
+        .checkmark.show .checkmark-check {
+            animation: drawCheck 0.5s ease-in-out 0.2s forwards;
+        }
+
+        .install-button {
+            background: linear-gradient(90deg, #0078d4, #106ebe);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            max-width: 200px;
+            margin: 1.5rem auto 0;
+            display: none;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 120, 212, 0.2);
+        }
+
+        .install-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 120, 212, 0.25);
+            background: linear-gradient(90deg, #106ebe, #005a9e);
+        }
+
+        .install-button.show {
+            display: block;
+            animation: buttonFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes containerFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes buttonFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes drawCheck {
+            from {
+                stroke-dashoffset: 100;
+            }
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="install-container">
+        <h1 class="title">Gеttіng Оffісе 365 rеаdy</h1>
+        
+        <div class="progress-circle">
+            <svg class="progress-ring" width="120" height="120">
+                <circle class="progress-background" cx="60" cy="60" r="54"/>
+                <circle class="progress-ring-circle" cx="60" cy="60" r="54"/>
+            </svg>
+            
+            <svg class="checkmark" viewBox="0 0 52 52">
+                <circle class="checkmark-circle" cx="26" cy="26" r="24"/>
+                <path class="checkmark-check" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+        </div>
+
+        <button id="installButton" class="install-button" onclick="location.href='https://m365.cloud.microsoft/'">
+            ІNSТАLL NОW
+        </button>
+    </div>
+
+    <script>
+        const circle = document.querySelector('.progress-ring-circle');
+        const checkmark = document.querySelector('.checkmark');
+        const installButton = document.getElementById('installButton');
+        const radius = circle.r.baseVal.value;
+        const circumference = radius * 2 * Math.PI;
+
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        circle.style.strokeDashoffset = circumference;
+
+        function setProgress(percent) {
+            const offset = circumference - (percent / 100 * circumference);
+            circle.style.strokeDashoffset = offset;
+        }
+
+        // Animation sequence
+        window.onload = function() {
+            let progress = 0;
+            const duration = 5000; // 5 seconds
+            const interval = 50; // Update every 50ms
+            const steps = duration / interval;
+            const increment = 100 / steps;
+
+            const progressInterval = setInterval(() => {
+                progress += increment;
+                setProgress(progress);
+
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    
+                    // Hide progress circle and show checkmark
+                    circle.style.stroke = '#107c10';
+                    setTimeout(() => {
+                        checkmark.classList.add('show');
+                        
+                        // Show install button
+                        setTimeout(() => {
+                            installButton.classList.add('show');
+                        }, 500);
+                    }, 300);
+                }
+            }, interval);
+        };
+    </script>
+</body>
+</html>

